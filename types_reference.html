@@ -26,8 +26,9 @@
                 }
             })();
 
-            $('#code').text($('script:last').text());
+            $('pre#types').text($('script#types').text());
             $('pre#literal').text($('script#literal').text());
+            $('pre#identify').text($('script#identify').text());
         })
 
     </script>
@@ -48,7 +49,7 @@
                     <h2>Reference types</h2>
                     <p>There are 6 builtin reference types namely Object, Array, Function, Date, Error, RegExp</p>
                     <h3>Builtin types</h3>
-                    <pre id="code">
+                    <pre id="types">
                     </pre>
 
                     <h4>Output</h4>
@@ -75,6 +76,16 @@
                     <pre id="literal-output"></pre>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Identify reference types</h3>
+                    <p>The typeof operator works fine with primitive types, however for reference types use instanceof instead</p>
+                    <pre id="identify"></pre>
+                    <pre id="identify-output"></pre>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -89,7 +100,7 @@
 
 <script id="literal">
     $(document).ready(function() {
-        // Literal object
+        // Object Literal
         var student = {
             name: 'Alex',
             roll: 19,
@@ -102,10 +113,18 @@
 
         $('#literal-output').html(student.address());
 
+        // Array Literal
+        var fruites = ['apple', 'banana'];
+
+        // Function literal
+        function sum(a, b) {
+            return a+b;
+        }
+
     });
 </script>
 
-<script>
+<script id="types">
     $(document).ready(function() {
         // Object
         var obj1 = new Object();
@@ -137,4 +156,10 @@
     });
 </script>
 
+<script id="identify">
+    $(function(){
+        var obj1 = new Object();
+        $('pre#identify-output').html(obj1 instanceof Object); // true
+    });
+</script>
 </body></html>
