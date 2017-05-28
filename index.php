@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>OOP JS</title>
+    <title>Newsletter subscription</title>
     <!-- Css -->
     <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet">
     <link media="all" type="text/css" rel="stylesheet" href="http://newsletter.softhem.se/css/site.css">
@@ -23,10 +23,17 @@
                     <hr />
                     <h2>The principles of OO JS - By Nicholas</h2>
                     <hr />
-                    <a href="/index.php" class="btn btn-success">Index</a>
-                    <h1>Types in Js</h1>
-                    <p>There are two types in Js: Primitive and Reference.</p>
-                    <p>Primitive store the value itself while reference is a pointer to memory location.</p>
+                    <h1>Index
+                        <ol>
+                        <?php
+                            $files = scandir('./');
+                            foreach($files as $file) {
+                                if(pathinfo($file, PATHINFO_EXTENSION) == 'html') {
+                                    echo "<li class='list'><a href='/{$file}' >" . $file . '</a></li>';
+                                }
+                            }
+                        ?>
+                        </ol>
                 </div>
             </div>
         </div>

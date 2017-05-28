@@ -1,0 +1,140 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OOP JS - Tutorial</title>
+    <!-- Css -->
+    <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet">
+    <link media="all" type="text/css" rel="stylesheet" href="http://newsletter.softhem.se/css/site.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <!-- Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        // print output of console.log to page
+        $(document).ready(function(){
+            (function () {
+                var old = console.log;
+                var logger = document.getElementById('log');
+                console.log = function (message) {
+                    if (typeof message == 'object') {
+                        logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+                    } else {
+                        logger.innerHTML += message + '<br />';
+                    }
+                }
+            })();
+
+            $('#code').text($('script:last').text());
+            $('pre#literal').text($('script#literal').text());
+        })
+
+    </script>
+
+</head>
+<body>
+<div class="wrapper">
+
+    <section id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                    <h1>The principles of OO JS - By Nicholas : Chapter 01</h1>
+                    <hr />
+                    <a href="/index.php" class="btn btn-success">Index</a>
+
+                    <h2>Reference types</h2>
+                    <p>There are 6 builtin reference types namely Object, Array, Function, Date, Error, RegExp</p>
+                    <h3>Builtin types</h3>
+                    <pre id="code">
+                    </pre>
+
+                    <h4>Output</h4>
+                    <pre id="log"></pre>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <h3>Creating objects</h3>
+                    <p>
+                        There are two ways of creating objects in Javascript.
+                        <ol>
+                            <li>Using new keyword</li>
+                            <li>Using the literal way</li>
+                        </ol>
+                    </p>
+
+                    <p>We discussed creating objects using new keyword in the builtin section above, The literal way of creating objects is given below</p>
+                    <pre id="literal">
+                    </pre>
+                    <h4>Output</h4>
+                    <pre id="literal-output"></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">&copy; SoftHem 2017</p>
+        <p class="pull-right">Powered by <a href="http://www.softhem.se/" rel="external">SoftHem</a></p>
+    </div>
+</footer>
+
+<script id="literal">
+    $(document).ready(function() {
+        // Literal object
+        var student = {
+            name: 'Alex',
+            roll: 19,
+            city: 'Bromma',
+            street: 'Beckom 15',
+            address: function() {
+                return this.name + ', ' + this.city + ' ' + this.street;
+            }
+        };
+
+        $('#literal-output').html(student.address());
+
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Object
+        var obj1 = new Object();
+        obj1.name = 'Ali';
+        obj1.country = 'Sweden';
+        console.log(obj1);
+
+        // Array
+        var items = new Array('apple', 'banana', 'citron', 'dates');
+        console.log(items);
+
+        // Function
+        var func = new Function("console.log('hi')");
+        func();
+
+        // Date
+        var dt = new Date();
+        console.log(dt.getFullYear());
+
+        // Error
+        var error = new Error('Some error occurred');
+        console.log(error.message);
+
+        // RegExp
+        var reg = new RegExp('\\d+');
+        console.log(reg.exec('string'));
+        console.log(reg.exec(55));
+
+    });
+</script>
+
+</body></html>
