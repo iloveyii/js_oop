@@ -21,11 +21,45 @@
             <div class="row">
                 <div class="col-md-12">
                     <hr />
-                    <h2>The principles of OO JS - By Nicholas</h2>
+                    <h2>The principles of OO JS - By Nicholas : Chapter 01</h2>
                     <hr />
                     <h1>Types in Js</h1>
                     <p>There are two types in Js: Primitive and Reference.</p>
                     <p>Primitive store the value itself while reference is a pointer to memory location.</p>
+                    <p>Therefore assigning primitive var to another creates a copy while in case of reference type only reference is copied.</p>
+
+                    <pre>
+                        // There are 5 primitive types
+                        // number
+                        var count = 10;
+                        var cost = 1.15;
+
+                        // string
+                        var name = 'Ali';
+                        var selection = 'z';
+
+                        // boolean
+                        var found = true;
+
+                        // null
+                        var object = null;
+
+                        // undefined
+                        var flag = undefined;
+                        var ref; // assigned undefined automatically
+
+                        console.log('These are the 5 primitive types in JS');
+                        console.log(count);
+                        console.log(name);
+                        console.log(found);
+
+                        console.log(object);
+                        console.log(flag)
+
+                        // To check type use typeof
+                        console.log(typeof flag);
+                        console.log(typeof cost);
+                    </pre>
                 </div>
             </div>
         </div>
@@ -66,7 +100,11 @@
     console.log(found);
 
     console.log(object);
-    console.log(flag);
+    console.log(flag)
+
+    // To check type use typeof
+    console.log(typeof flag);
+    console.log(typeof cost);
 </script>
 
 </body></html>
