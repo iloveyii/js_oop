@@ -1,0 +1,110 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OOP JS</title>
+    <!-- Css -->
+    <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet">
+    <link media="all" type="text/css" rel="stylesheet" href="http://newsletter.softhem.se/css/site.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <!-- Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        // print output of console.log to page
+        $(document).ready(function(){
+            function consoleBind(ele) {
+                var old = console.log;
+                var logger = ele;
+                console.log = function (message) {
+                    if (typeof message == 'object') {
+                        logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+                    } else {
+                        logger.innerHTML += message + '<br />';
+                    }
+                }
+            };
+
+            var showCodes = ['detecting'];
+            (function() {
+                showCodes.forEach(function(id) {
+                    $('div#'+id).append('<pre>'+ $('script#'+id).text() +'</pre>');
+                    $('div#'+id).append('<h4>Output</h4>');
+                    var ele = document.createElement('pre');
+                    consoleBind(ele);
+                    $('div#'+id).append(ele);
+                })
+            })();
+
+        })
+
+    </script>
+
+</head>
+<body>
+<div class="wrapper">
+
+    <section id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                    <h1>The principles of OO JS - By Nicholas: Chapter 02</h1>
+                    <hr />
+                    <a href="/index.php" class="btn btn-success">Index</a>
+                    <h2>Prevent Object Modification</h2>
+                    <p>There are two ways of creating objects in Js, using the Object constructor and using the Object literal.</p>
+                    <p>When we create a property of an object for the fist time, the JS engine calls [Put] method, but when we
+                    update it with another value it calls [Set] method. The Put method makes the hasOwnProperty true.
+                    The hasOwnProperty is different than prototype properties.</p>
+                    <p>
+
+                    <h3>Detecting properties</h3>
+                    <div id="detecting">
+                        <p>To detect if a property is in an object use the 'in' operator. The in operator checks both own and prototype properties. To see own property
+                        use hasOwnProperty method instead.</p>
+                        <p>To remove an object property use 'delete'.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">&copy; SoftHem 2017</p>
+        <p class="pull-right">Powered by <a href="http://www.softhem.se/" rel="external">SoftHem</a></p>
+    </div>
+</footer>
+
+<script id="detecting">
+    $(document).ready(function() {
+
+        var person1 = {
+            name: 'Scooby doo',
+            age: 29
+        }
+
+        console.log("name" in person1); // true
+        console.log("age" in person1); // true
+        console.log("title" in person1); // false
+
+        // hasOwnProperty
+        console.log("toString" in person1); // true
+        console.log(person1.hasOwnProperty("toString")); // false
+
+        // removing property
+        delete person1.name;
+        console.log("name" in person1); // false
+
+
+    });
+</script>
+
+</body>
+</html>

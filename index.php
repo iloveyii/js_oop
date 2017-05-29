@@ -40,6 +40,7 @@
                                     }
                                 }
 
+                                ksort($sorted);
                                 return $sorted;
                             }
 
@@ -50,11 +51,10 @@
                                     echo '<li>' . ucfirst(str_replace('_', ' ', $dir)) . '</li>';
                                     $files = scandir("./{$dir}");
                                     $files = sortFiles($files);
-                                    ksort($files);
 
                                     echo '<ol>';
                                     foreach ($files as $file) {
-                                        echo "<li class='list'><a href='/{$dir}/{$file}' >" . preg_replace('/[^a-z]/i', '', ucfirst(rtrim($file, '.html'))) . '</a></li>';
+                                        echo "<li class='list'><a href='/{$dir}/{$file}' >" . preg_replace('/[^a-z]/i', ' ', ucfirst(rtrim($file, '.html'))) . '</a></li>';
                                     }
                                     echo '</ol>';
                                 }
