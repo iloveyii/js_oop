@@ -27,7 +27,7 @@
                 }
             };
 
-            var showCodes = ['declaration', 'expression', 'fvalues', 'passfunction'];
+            var showCodes = ['declaration', 'expression', 'fvalues', 'passfunction', 'parameters'];
             (function() {
                 showCodes.forEach(function(id) {
                     $('div#'+id).append('<pre>'+ $('script#'+id).text() +'</pre>');
@@ -80,6 +80,13 @@
                     <h3>Pass functions to other function</h3>
                     <p>We can pass one function as an argument to another function.</p>
                     <div id="passfunction"></div>
+
+                    <h3>Parameter</h3>
+                    <p>We can pass any number of parameters to a function without throwing errors. The parameters are
+                        available to in auto array argument in a function. The named parameters are just for convenience.
+                        The length of the function is the number of expected parameters.
+                    </p>
+                    <div id="parameters"></div>
 
                 </div>
             </div>
@@ -139,5 +146,15 @@
     });
 </script>
 
+<script id="parameters">
+    $(document).ready(function() {
+        function reflect(value) {
+            return value;
+        }
+        console.log('Passed on parameter: ' + reflect("Hi!")); // "Hi!"
+        console.log('Passed two parameters: ' + reflect("Hi!", 25)); // "Hi!"
+        console.log('Length of function: ' + reflect.length); // 1
+    })
+</script>
 </body>
 </html>
