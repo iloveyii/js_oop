@@ -1,0 +1,143 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OOP JS</title>
+    <!-- Css -->
+    <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet">
+    <link media="all" type="text/css" rel="stylesheet" href="http://newsletter.softhem.se/css/site.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <!-- Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        // print output of console.log to page
+        $(document).ready(function(){
+            function consoleBind(ele) {
+                var old = console.log;
+                var logger = ele;
+                console.log = function (message) {
+                    if (typeof message == 'object') {
+                        logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+                    } else {
+                        logger.innerHTML += message + '<br />';
+                    }
+                }
+            };
+
+            var showCodes = ['declaration', 'expression', 'fvalues', 'passfunction'];
+            (function() {
+                showCodes.forEach(function(id) {
+                    $('div#'+id).append('<pre>'+ $('script#'+id).text() +'</pre>');
+                    $('div#'+id).append('<h4>Output</h4>');
+                    var ele = document.createElement('pre');
+                    consoleBind(ele);
+                    $('div#'+id).append(ele);
+                })
+            })();
+
+        })
+
+    </script>
+
+
+</head>
+<body>
+<div class="wrapper">
+
+    <section id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                    <h1>The principles of OO JS - By Nicholas: Chapter 02</h1>
+                    <hr />
+                    <a href="/index.php" class="btn btn-success">Index</a>
+                    <h2>Functions in Js</h2>
+                    <p>Functions are actually objects in JS. It is executable and it has a call function.</p>
+                    <p>There are two ways of defining functions.</p>
+                    <p>
+                        <ol>
+                            <li>Function declaration</li>
+                            <li>Function expression</li>
+                        </ol>
+                    </p>
+
+                    <h3>Declaration vs Expressions</h3>
+                    <div id="declaration">
+                        <p>Here we declare a function as we do in other programming languages. These functions are hoisted by JS engine which means we can use them before declaration.</p>
+                    </div>
+                    <div id="expression">
+                        <p>Here the function is assigned to a variable and therefore it can be passed as argument to other functions.</p>
+                    </div>
+
+                    <h3>Functions as values</h3>
+                    <p>As functions are like objects in JS, you can assign them to variables just like other objects.</p>
+                    <div id="fvalues"></div>
+
+                    <h3>Pass functions to other function</h3>
+                    <p>We can pass one function as an argument to another function.</p>
+                    <div id="passfunction"></div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">&copy; SoftHem 2017</p>
+        <p class="pull-right">Powered by <a href="http://www.softhem.se/" rel="external">SoftHem</a></p>
+    </div>
+</footer>
+
+<script id="declaration">
+    $(document).ready(function() {
+        console.log('Declaration function: ' + add(5,7));
+
+        function add(num1, num2) {
+            return num1 + num2;
+        }
+    });
+</script>
+
+<script id="expression">
+    $(document).ready(function() {
+        var add = function(num1, num2) {
+            return num1 + num2;
+        }
+        console.log('Expression function: ' + add(5,7));
+    });
+</script>
+
+<script id="fvalues">
+    $(document).ready(function() {
+        function sayHi() {
+            console.log('Hi!');
+        }
+
+        sayHi();
+        var sayHi2 = sayHi;
+        sayHi2();
+    })
+</script>
+
+<script id="passfunction">
+    $(document).ready(function() {
+        var numbers = [2,4,23,5,22,18,6, 10, 1, 12];
+        numbers.sort();
+        console.log('Numbers default sort: ' + numbers);
+
+        numbers.sort(function(a,b){
+            return  a - b;
+        });
+        console.log('Numbers sort with passed function: ' + numbers);
+    });
+</script>
+
+</body>
+</html>

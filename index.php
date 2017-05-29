@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Newsletter subscription</title>
+    <title>OO Javascript</title>
     <!-- Css -->
     <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet">
     <link media="all" type="text/css" rel="stylesheet" href="http://newsletter.softhem.se/css/site.css">
@@ -26,10 +26,19 @@
                     <h1>Index
                         <ol>
                         <?php
-                            $files = scandir('./');
-                            foreach($files as $file) {
-                                if(pathinfo($file, PATHINFO_EXTENSION) == 'html') {
-                                    echo "<li class='list'><a href='/{$file}' >" . $file . '</a></li>';
+                            $dirs = scandir('./');
+
+                            foreach($dirs as $dir) {
+                                if(in_array($dir, ['chapter_01', 'chapter_02'])) {
+                                    echo '<li>' . ucfirst(str_replace('_', ' ', $dir)) . '</li>';
+                                    $files = scandir("./{$dir}");
+                                    echo '<ol>';
+                                    foreach ($files as $file) {
+                                        if (pathinfo($file, PATHINFO_EXTENSION) == 'html') {
+                                            echo "<li class='list'><a href='/{$dir}/{$file}' >" . $file . '</a></li>';
+                                        }
+                                    }
+                                    echo '</ol>';
                                 }
                             }
                         ?>
