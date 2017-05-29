@@ -26,17 +26,35 @@
                     <h1>Index
                         <ol>
                         <?php
+
+                            function sortFiles($files)
+                            {
+                                foreach($files as $file) {
+                                    if (pathinfo($file, PATHINFO_EXTENSION) == 'html') {
+                                        preg_match('/_(\d+)\.html/', $file, $matches);
+                                        if(isset($matches[1])) {
+                                            $sorted[$matches[1]] = $file;
+                                        } else {
+                                            $sorted[] = $file;
+                                        }
+                                    }
+                                }
+
+                                return $sorted;
+                            }
+
                             $dirs = scandir('./');
 
                             foreach($dirs as $dir) {
-                                if(in_array($dir, ['chapter_01', 'chapter_02'])) {
+                                if(in_array($dir, ['chapter_01', 'chapter_02', 'chapter_03', 'chapter_04'])) {
                                     echo '<li>' . ucfirst(str_replace('_', ' ', $dir)) . '</li>';
                                     $files = scandir("./{$dir}");
+                                    $files = sortFiles($files);
+                                    ksort($files);
+
                                     echo '<ol>';
                                     foreach ($files as $file) {
-                                        if (pathinfo($file, PATHINFO_EXTENSION) == 'html') {
-                                            echo "<li class='list'><a href='/{$dir}/{$file}' >" . $file . '</a></li>';
-                                        }
+                                        echo "<li class='list'><a href='/{$dir}/{$file}' >" . preg_replace('/[^a-z]/i', '', ucfirst(rtrim($file, '.html'))) . '</a></li>';
                                     }
                                     echo '</ol>';
                                 }

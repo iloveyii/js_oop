@@ -27,7 +27,8 @@
                 }
             };
 
-            var showCodes = ['declaration', 'expression', 'fvalues', 'passfunction', 'parameters'];
+            var showCodes = ['declaration', 'expression', 'fvalues', 'passfunction', 'parameters', 'overloading',
+            'thisObj', 'changeThis'];
             (function() {
                 showCodes.forEach(function(id) {
                     $('div#'+id).append('<pre>'+ $('script#'+id).text() +'</pre>');
@@ -41,7 +42,6 @@
         })
 
     </script>
-
 
 </head>
 <body>
@@ -87,6 +87,27 @@
                         The length of the function is the number of expected parameters.
                     </p>
                     <div id="parameters"></div>
+
+                    <h3>Overloading</h3>
+                    <p>Overloading means a function with different signatures. Signature means the number of parameters and return type.
+                        In Javascript there is no overloading as a function can have any number of parameters. But we can be
+                        mimic it by checking the number of parameters passed e.g. function.length. If there are two functions
+                        with the same name the later wins.
+                    </p>
+                    <div id="overloading"></div>
+
+                    <h3>This Object</h3>
+                    <p>This refers to the current scope. In global scope this refers to the window object.</p>
+                    <div id="thisObj"></div>
+
+                    <h3>Changing this</h3>
+                    <p>Although the value of this is automatically set but there are three functions that enable us to change the value of this.</p>
+                    <p>The call method takes the first parameter as the value of this in the called function, and other parameters as
+                        arguments to the function. The apply method is the same as call except it takes the parameters in the form
+                    of array.</p>
+                    <p>The bind method does not call the functional immediately, instead it returns an object with the new this reference.
+                    This first parameter is the object to overwrite 'this' context, the later set the parameters to the function.</p>
+                    <div id="changeThis"></div>
 
                 </div>
             </div>
@@ -151,10 +172,77 @@
         function reflect(value) {
             return value;
         }
-        console.log('Passed on parameter: ' + reflect("Hi!")); // "Hi!"
+        console.log('Passed one parameter: ' + reflect("Hi!")); // "Hi!"
         console.log('Passed two parameters: ' + reflect("Hi!", 25)); // "Hi!"
         console.log('Length of function: ' + reflect.length); // 1
     })
 </script>
+
+<script id="overloading">
+    $(document).ready(function() {
+        function sayMessage(message) {
+            console.log('First function: ' + message);
+        }
+
+        function sayMessage() {
+            console.log('Second function: ' + 'Default message');
+            var a = 'hi';
+            function b() {
+                console.log('inside b: ' + a);
+            }
+            b();
+        }
+        sayMessage('Say my message'); // Default message
+    })
+</script>
+
+<script id="thisObj">
+    $(document).ready(function() {
+        var person = {
+            name: 'Alex',
+            sayName: function() {
+                console.log('My name is: ' + this.name);
+                console.log('My name is: ' + person.name);
+            }
+        }
+        person.sayName();
+    });
+</script>
+
+<script id="changeThis">
+    $(document).ready(function() {
+        // call method
+        function sayNameForAll(obj) {
+           console.log('My name inside obj: ' + obj + ' is: ' + this.name);
+        }
+
+        var person1 = {
+            name: 'Alexander'
+        }
+
+        var person2 = {
+            name: 'Bob Dove'
+        }
+
+        sayNameForAll.call(person1, 'person1');
+        sayNameForAll.call(person2, 'person2');
+
+        // apply method
+        this.name = 'Abraham';
+        var person3 = {
+            name: 'Clark'
+        }
+        sayNameForAll.apply(this, ['this'])
+        sayNameForAll.apply(person3, ['person3']);
+
+        // bind method
+        var sayNameForPerson1 = sayNameForAll.bind(person1);
+        sayNameForPerson1('person1');
+        var sayNameForPerson2 = sayNameForAll.bind(person2, 'person2');
+        sayNameForPerson2();
+
+    });
+</script>
+
 </body>
 </html>
