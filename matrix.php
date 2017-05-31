@@ -5,7 +5,7 @@
  * Date: 2017-05-31
  * Time: 11:00
  */
-class MatrixSpiral
+class SpiralMatrix
 {
     private $row, $col;
     private $minRow, $minCol;
@@ -13,19 +13,35 @@ class MatrixSpiral
     private $number;
     private $spiral;
     private $size;
+    private $format;
 
-    public function __construct($size)
+    public function __construct($size, $startFrom = 0)
     {
         $this->row = 0;
         $this->col = 0;
 
         $this->minRow = $this->minCol = 0;
         $this->maxRow = $this->maxCol = $size;
-        $this->number = 0;
+        $this->number = $startFrom;
         $this->size = $size;
+        $n = strlen((string)($size * $size));
+        $this->format = "%0{$n}d";
     }
 
     public function printMatrix()
+    {
+        $this->make();
+
+        foreach($this->spiral as $row => $col) {
+            foreach($col as $item) {
+                echo $item . '  ';
+            }
+
+            echo PHP_EOL;
+        }
+    }
+
+    private function make()
     {
         foreach(range(0, ($this->size - 1)) as $item) {
             $this->goRight();
@@ -34,28 +50,30 @@ class MatrixSpiral
             $this->goUp();
         }
 
-        foreach($this->spiral as $row => $col) {
-            $sorted[] = $this->arraySort($col);
-        }
-
-        print_r($sorted);
+        $this->arraySort();
     }
 
-    private function arraySort($a)
+    private function arraySort()
     {
-        for($i = 0; $i < count($a); $i++) {
-            $sorted[] = $a[$i];
+        foreach($this->spiral as $row => $col) {
+            $sortedColArray = [];
+            for ($i = 0; $i < count($col); $i++) {
+                $sortedColArray[] = $col[$i];
+            }
+            $sorted[] = $sortedColArray;
         }
 
-        return $sorted;
+        return $this->spiral = $sorted;
     }
+
     private function goRight()
     {
-        for($col = $this->minCol; $col < $this->maxCol; ++$col) {
+        for($col = $this->minCol; $col < $this->maxCol; $col++) {
             $this->printf($this->number++, $this->minRow, $col);
         }
         $this->minRow++;
     }
+
     private function goDown()
     {
         $this->maxCol--;
@@ -63,6 +81,7 @@ class MatrixSpiral
             $this->printf($this->number++, $row, $this->maxCol);
         }
     }
+
     private function goLeft()
     {
         $this->maxRow--;
@@ -70,6 +89,7 @@ class MatrixSpiral
             $this->printf($this->number++, $this->maxRow, $col);
         }
     }
+
     private function goUp()
     {
         for($row = $this->maxRow - 1; $row >= $this->minRow; $row--) {
@@ -80,11 +100,11 @@ class MatrixSpiral
 
     private function printf($item, $row, $col)
     {
-        $this->spiral[$row][$col] = sprintf("%02d", $item);
+        $this->spiral[$row][$col] = sprintf($this->format, $item);
     }
 
 
 }
 
-$m = new MatrixSpiral(5);
+$m = new SpiralMatrix(15, 1);
 $m->printMatrix();
