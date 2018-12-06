@@ -51,21 +51,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <hr />
-                    <h1>The principles of OO JS - By Nicholas: Chapter 04</h1>
+                    <h1>The principles of OO JS - By Nicholas: Chapter 05</h1>
                     <hr />
                     <a href="../index.php" class="btn btn-success">Index</a>
-                    <h2>Constructors</h2>
-                    <p>There are two ways of creating objects in Js, using the Object constructor and using the Object literal.</p>
-                    <p>When we create a property of an object for the fist time, the JS engine calls [Put] method, but when we
-                    update it with another value it calls [Set] method. The Put method makes the hasOwnProperty true.
-                    The hasOwnProperty is different than prototype properties.</p>
+                    <h2>Promise</h2>
+                    <p>A promise is an object that does asynchronous operation and return the value to a callback function on success.</p>
+                    <p>The then part supplies the callback functions to the promise. Promises can be chained with then (thenable).</p>
                     <p>
 
-                    <h3>Detecting properties</h3>
                     <div id="detecting">
-                        <p>To detect if a property is in an object use the 'in' operator. The in operator checks both own and prototype properties. To see own property
-                        use hasOwnProperty method instead.</p>
-                        <p>To remove an object property use 'delete'.</p>
                     </div>
 
                 </div>
@@ -85,22 +79,32 @@
 <script id="detecting">
     $(document).ready(function() {
 
-        var person1 = {
-            name: 'Scooby doo',
-            age: 29
-        }
+        const promise = new Promise((resolve, reject)=>{
+            resolve('Fulfilled');
+            reject('Error');
+        });
 
-        console.log("name" in person1); // true
-        console.log("age" in person1); // true
-        console.log("title" in person1); // false
+        promise.then((data)=>{
+            console.log(data);
+        }, (error)=>{
+            console.log('Some error occurred ' + error);
+        });
 
-        // hasOwnProperty
-        console.log("toString" in person1); // true
-        console.log(person1.hasOwnProperty("toString")); // false
 
-        // removing property
-        delete person1.name;
-        console.log("name" in person1); // false
+        console.log('Chaining promises');
+
+        new Promise((resolve, reject) => {
+            setTimeout(()=>resolve(1), 1000);
+        }).then(result=>{
+            console.log(result);
+            return result * 2;
+        }).then(result => {
+            console.log(result);
+            return result * 2;
+        }).then(result=> {
+            console.log(result);
+            return result * 2;
+        }).then(result=>console.log(result));
 
 
     });

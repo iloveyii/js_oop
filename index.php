@@ -47,7 +47,7 @@
                             $dirs = scandir('./');
 
                             foreach($dirs as $dir) {
-                                if(in_array($dir, ['chapter_01', 'chapter_02', 'chapter_03', 'chapter_04'])) {
+                                if(in_array($dir, ['chapter_01', 'chapter_02', 'chapter_03', 'chapter_04', 'chapter_05'])) {
                                     echo '<li>' . ucfirst(str_replace('_', ' ', $dir)) . '</li>';
                                     $files = scandir("./{$dir}");
                                     $files = sortFiles($files);
