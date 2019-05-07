@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OOP JS | Promises</title>
+    <!-- Css -->
+    <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet">
+    <link media="all" type="text/css" rel="stylesheet" href="http://newsletter.softhem.se/css/site.css">
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <!-- Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        // print output of console.log to page
+        $(document).ready(function(){
+            function consoleBind(ele) {
+                var old = console.log;
+                var logger = ele;
+                console.log = function (message) {
+                    if (typeof message == 'object') {
+                        logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+                    } else {
+                        logger.innerHTML += message + '<br />';
+                    }
+                }
+            }
+
+            var showCodes = ['es5'];
+            (function() {
+                showCodes.forEach(function(id) {
+                    $('div#'+id).append('<pre>'+ $('script#'+id).text() +'</pre>');
+                    $('div#'+id).append('<h4>Output</h4>');
+                    var ele = document.createElement('pre');
+                    consoleBind(ele);
+                    $('div#'+id).append(ele);
+                })
+            })();
+
+        })
+
+    </script>
+
+</head>
+<body>
+<div class="wrapper">
+
+    <section id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                    <h1>The principles of OO JS - By Nicholas: Chapter 05</h1>
+                    <hr />
+                    <a href="../index.php" class="btn btn-success">Index</a>
+                    <h2>Promise 2</h2>
+                    <p>Lets find if a number is an even number using ES 5 (Java Script) approach.</p>
+                    <p>And then doing the same example using ES 6 Promises.</p>
+                    <p>
+
+                    <div id="es5">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">&copy; SoftHem 2017</p>
+        <p class="pull-right">Powered by <a href="http://www.softhem.se/" rel="external">SoftHem</a></p>
+    </div>
+</footer>
+
+<script id="es5">
+    $(document).ready(function() {
+
+        function isEven(number, callback) {
+            if(number % 2 === 0) {
+                callback(true);
+            } else {
+                callback(false);
+            }
+        }
+
+        var number = 9;
+        isEven( number, function (result) {
+            if(result === true) {
+                console.log(number + ' is even');
+            } else {
+                console.log(number + ' is odd');
+            }
+        })
+
+        /* The ES 6 promise way of doing the above */
+        function isEven2(number) {
+            return new Promise( (resolve, reject) => {
+                if(number % 2 === 0) {
+                    resolve(true);
+                } else {
+                    reject(false);
+                }
+            })
+        }
+
+        isEven2(number)
+            .then( result => console.log(number + ' is an even number !' + result))
+            .catch(result => console.log(number + ' is an odd number !' + result));
+    });
+</script>
+
+</body>
+</html>
