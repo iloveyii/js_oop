@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OOP JS | Async - await</title>
+    <!-- Css -->
+    <link href="https://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet">
+    <link media="all" type="text/css" rel="stylesheet" href="http://newsletter.softhem.se/css/site.css">
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <!-- Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        // print output of console.log to page
+        $(document).ready(function(){
+            function consoleBind(ele) {
+                var old = console.log;
+                var logger = ele;
+                console.log = function (message) {
+                    if (typeof message == 'object') {
+                        logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+                    } else {
+                        logger.innerHTML += message + '<br />';
+                    }
+                }
+            }
+
+            var showCodes = ['es5'];
+            (function() {
+                showCodes.forEach(function(id) {
+                    $('div#'+id).append('<pre>'+ $('script#'+id).text() +'</pre>');
+                    $('div#'+id).append('<h4>Output</h4>');
+                    var ele = document.createElement('pre');
+                    consoleBind(ele);
+                    $('div#'+id).append(ele);
+                })
+            })();
+
+        })
+
+    </script>
+
+</head>
+<body>
+<div class="wrapper">
+
+    <section id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                    <h1>The principles of OO JS - By Nicholas: Chapter 05</h1>
+                    <hr />
+                    <a href="../index.php" class="btn btn-success">Index</a>
+                    <h2>Async Await</h2>
+                    <p>The async await is used to simply wait for a promise to complete before proceeding.</p>
+                    <p>If the result of a promise is required for the rest of the statements, wrap the promise in async await function.</p>
+                    <p>But the thread will wait ONLY inside async function (only the awaited promise) and not outside that function.</p>
+                    <p>In the example the console.log('Inside async') is called after the awaited promise which console logs after 2 seconds, but the then part of promise.then has a separated thread and is run in async way.</p>
+                    <p>Async is in front of a function while await is in front of a promise</p>
+                    <div id="es5">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">&copy; SoftHem 2017</p>
+        <p class="pull-right">Powered by <a href="http://www.softhem.se/" rel="external">SoftHem</a></p>
+    </div>
+</footer>
+
+<script id="es5">
+    $(document).ready(function() {
+
+        async function test() {
+            let promise = new Promise( (resolve, reject) => {
+                setTimeout( () => {
+                    console.log('Inside await which waited for 2 seconds.');
+                    resolve(10);
+                }, 2000);
+            });
+
+            let result = await  promise;
+
+            promise.then( (r) => {
+                console.log('Result returned by resolve/then part is : ' + r);
+            });
+
+            console.log('Inside async');
+        }
+
+        test();
+        console.log('Out of async');
+
+
+        /* Async for class method */
+        class Waiter {
+            async wait() {
+                return await Promise.resolve(1);
+            }
+        }
+
+        new Waiter()
+            .wait()
+            .then((result) =>console.log('Async for class method : ' + result)); // 1
+    });
+</script>
+
+</body>
+</html>
